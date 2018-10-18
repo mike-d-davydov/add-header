@@ -2,8 +2,7 @@ package com.mastercard.trident.addheader;
 
 import com.google.common.collect.ImmutableMap;
 import com.mastercard.trident.e2e.rules.LocalChromeDriverServerRule;
-import com.mastercard.trident.e2e.rules.ModHeadersExtensionRule;
-import org.junit.BeforeClass;
+import com.mastercard.trident.e2e.rules.ChromeDriverWithModHeadersExtensionRule;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -22,12 +21,14 @@ import java.util.stream.IntStream;
 @RunWith(Parameterized.class)
 public class AddHeaderMHTest {
 
-    private static ModHeadersExtensionRule mhRule = new ModHeadersExtensionRule();
     private static LocalChromeDriverServerRule chromeDriverServerRule = new LocalChromeDriverServerRule();
+    private static ChromeDriverWithModHeadersExtensionRule mhRule = new ChromeDriverWithModHeadersExtensionRule(
+            ImmutableMap.of("myHeader", "blah-blah"));
 
     @ClassRule
     public static TestRule rule = RuleChain.outerRule(chromeDriverServerRule)
             .around(mhRule);
+
 
     final private static int numRuns = 10;
 
@@ -36,13 +37,6 @@ public class AddHeaderMHTest {
         return IntStream.range(0, numRuns).mapToObj(i -> new Object[]{}).collect(Collectors.toList());
     }
 
-
-    @BeforeClass
-    public static void addHeaders() {
-        mhRule.addHeaders(
-                ImmutableMap.of("myHeader", "blah-blah")
-        );
-    }
 
     @Test
     public void test() {

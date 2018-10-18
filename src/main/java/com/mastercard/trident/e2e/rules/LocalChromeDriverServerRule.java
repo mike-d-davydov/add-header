@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class LocalChromeDriverServerRule extends ExternalResource {
+public class LocalChromeDriverServerRule extends ExternalResource implements SeleniumServerUrlProvider {
     private Logger logger = LoggerFactory.getLogger(LocalChromeDriverServerRule.class);
     private ChromeDriverService service = null;
+    private String serverUrl = "";
 
 
-    @Override
-    public void before() {
+    public LocalChromeDriverServerRule() {
         try {
             service = new ChromeDriverService.Builder()
                     .usingDriverExecutable(
@@ -26,6 +26,7 @@ public class LocalChromeDriverServerRule extends ExternalResource {
             service.start();
 
             String serviceUrl = service.getUrl().toString();
+            serverUrl = serviceUrl;
             System.setProperty("webdriver.remote.server", serviceUrl);
         } catch (Exception e) {
             logger.error("", e);
@@ -33,10 +34,16 @@ public class LocalChromeDriverServerRule extends ExternalResource {
         }
     }
 
+
     @Override
     public void after() {
-        if (service != null){
+        if (service != null) {
             service.stop();
         }
+    }
+
+    @Override
+    public String getServerURL() {
+        return serverUrl;
     }
 }

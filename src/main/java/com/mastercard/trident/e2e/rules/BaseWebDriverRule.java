@@ -6,12 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class WebDriverRule extends ExternalResource {
+public class BaseWebDriverRule extends ExternalResource implements
+        WebDriverProvider {
 
     protected Capabilities capabilities;
     protected WebDriver webDriver = null;
 
-    public WebDriverRule(CapabilitiesProvider... providers){
+    public BaseWebDriverRule(CapabilitiesProvider... providers){
         capabilities = new DesiredCapabilities();
         for (CapabilitiesProvider provider:providers){
             capabilities.merge(provider.getCapabilities());

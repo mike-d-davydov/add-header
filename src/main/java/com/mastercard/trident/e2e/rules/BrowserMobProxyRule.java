@@ -14,13 +14,18 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-public class BrowserMobProxyRule extends ExternalResource implements CapabilitiesProvider {
+public class BrowserMobProxyRule extends ExternalResource implements CapabilitiesProvider, AddsHeaders {
     private BrowserMobProxy proxy;
 
     public BrowserMobProxyRule() {
         proxy = new BrowserMobProxyServer();
         proxy.setTrustAllServers(true);
         proxy.start();
+    }
+
+    public BrowserMobProxyRule(Map<String, String> headers){
+        this();
+        addHeaders(headers);
     }
 
 

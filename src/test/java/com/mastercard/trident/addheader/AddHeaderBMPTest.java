@@ -3,7 +3,7 @@ package com.mastercard.trident.addheader;
 import com.google.common.collect.ImmutableMap;
 import com.mastercard.trident.e2e.rules.BrowserMobProxyRule;
 import com.mastercard.trident.e2e.rules.LocalChromeDriverServerRule;
-import com.mastercard.trident.e2e.rules.WebDriverRule;
+import com.mastercard.trident.e2e.rules.BaseWebDriverRule;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -23,9 +23,13 @@ import java.util.stream.IntStream;
 @RunWith(Parameterized.class)
 public class AddHeaderBMPTest {
 
-    private static BrowserMobProxyRule bmpRule = new BrowserMobProxyRule();
+    // First start Proxy
+    private static BrowserMobProxyRule bmpRule = new BrowserMobProxyRule(ImmutableMap.of(
+            "myHeader", "blah-blah"));
+    // Next start ChromeDriverService
     private static LocalChromeDriverServerRule chromeDriverServerRule = new LocalChromeDriverServerRule();
-    private static WebDriverRule webDriverRule = new WebDriverRule(bmpRule);
+    // Finally, start browser
+    private static BaseWebDriverRule webDriverRule = new BaseWebDriverRule(bmpRule);
 
     @ClassRule
     public static TestRule rule = RuleChain.outerRule(bmpRule)
@@ -40,13 +44,6 @@ public class AddHeaderBMPTest {
         return IntStream.range(0, numRuns).mapToObj(i -> new Object[]{}).collect(Collectors.toList());
     }
 
-
-    @Before
-    public void addHeaders() {
-        bmpRule.addHeaders(
-                ImmutableMap.of("myHeader", "blah-blah")
-        );
-    }
 
 
     @Test

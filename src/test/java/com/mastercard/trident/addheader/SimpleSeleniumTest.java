@@ -1,7 +1,7 @@
 package com.mastercard.trident.addheader;
 
 import com.mastercard.trident.e2e.rules.LocalChromeDriverServerRule;
-import com.mastercard.trident.e2e.rules.WebDriverRule;
+import com.mastercard.trident.e2e.rules.BaseWebDriverRule;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 @RunWith(Parameterized.class)
 public class SimpleSeleniumTest {
     private static LocalChromeDriverServerRule chromeDriverServerRule = new LocalChromeDriverServerRule();
-    private static WebDriverRule webDriverRule = new WebDriverRule();
+    private static BaseWebDriverRule webDriverRule = new BaseWebDriverRule();
 
     @ClassRule
     public static TestRule rule = RuleChain.outerRule(chromeDriverServerRule)
