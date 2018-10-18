@@ -87,9 +87,3 @@ Please refer to tests (https://github.com/mike-d-davydov/add-header/tree/master/
       // Test code here...
 
     }
-
-
-## Perormance tests results
-
-
-
