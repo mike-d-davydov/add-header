@@ -4,11 +4,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChromeDriverWithModHeadersExtensionRule extends BaseWebDriverRule implements AddsHeaders {
+    private Map<String, String> headers = new HashMap<>();
+
 
     public ChromeDriverWithModHeadersExtensionRule() {
         super(() -> {
@@ -25,9 +28,11 @@ public class ChromeDriverWithModHeadersExtensionRule extends BaseWebDriverRule i
         });
     }
 
+
+
     public ChromeDriverWithModHeadersExtensionRule(Map<String, String> headers, CapabilitiesProvider... providers) {
         this(providers);
-        addHeaders(headers);
+        this.headers = headers;
     }
 
 
@@ -65,6 +70,9 @@ public class ChromeDriverWithModHeadersExtensionRule extends BaseWebDriverRule i
     public void before() {
         webDriver = new RemoteWebDriver(capabilities);
         webDriver.get("chrome-extension://idgpnmonknjnojddfkpgkljpfnnfcklj/icon.png");
+        if (!headers.isEmpty()){
+            addHeaders(headers);
+        }
 
     }
 

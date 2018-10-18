@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mastercard.trident.e2e.rules.LocalChromeDriverServerRule;
 import com.mastercard.trident.e2e.rules.ChromeDriverWithModHeadersExtensionRule;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
@@ -21,14 +22,12 @@ import java.util.stream.IntStream;
 @RunWith(Parameterized.class)
 public class AddHeaderMHTest {
 
-    private static LocalChromeDriverServerRule chromeDriverServerRule = new LocalChromeDriverServerRule();
-    private static ChromeDriverWithModHeadersExtensionRule mhRule = new ChromeDriverWithModHeadersExtensionRule(
-            ImmutableMap.of("myHeader", "blah-blah"));
-
     @ClassRule
-    public static TestRule rule = RuleChain.outerRule(chromeDriverServerRule)
-            .around(mhRule);
+    public  static LocalChromeDriverServerRule chromeDriverServerRule = new LocalChromeDriverServerRule();
 
+    @Rule
+    public ChromeDriverWithModHeadersExtensionRule mhRule = new ChromeDriverWithModHeadersExtensionRule(
+            ImmutableMap.of("myHeader", "blah-blah"));
 
     final private static int numRuns = 10;
 
