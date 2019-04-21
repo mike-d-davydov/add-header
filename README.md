@@ -2,7 +2,7 @@
 
 ## Overview
 
-This set of libraries is a proof of concept (PoC) for E2E -> Synapse integration. The idea is that we can use additional request headers to tell Synapse how to route particular requests from E2E tests (use case: Blue/Green deployment).
+This set of libraries is a proof of concept (PoC) for integration of WebDriver end-to-end (E2E) tests with [Apache Synapse Enterprise Service Bus](https://synapse.apache.org/). The idea is that we can use additional request headers to tell Synapse how to route particular requests from E2E tests (use case: Blue/Green deployment).
 
 For Web Server (SUT) being tested with E2E test framework it will look like all the requests from Browser have some extra headers.
 
